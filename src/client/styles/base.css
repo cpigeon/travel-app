@@ -1,8 +1,11 @@
+@import "./header.css";
+@import "./footer.css";
+
 .container{
     display: grid;
       grid-template-rows: 100px 1fr 100px;
     /* grid-auto-rows: minmax(150px, auto); */
-    justify-content: center;
+    /* justify-content: center; */
     grid-gap: 1em;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
