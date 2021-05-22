@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/cpigeon/travel-app/issues"
   },
-  "homepage": "https://github.com/cpigeon/travel-app#readme"
+  "homepage": "https://github.com/cpigeon/travel-app#readme",
+  "devDependencies": {
+    "webpack": "^5.37.1",
+    "webpack-cli": "^4.7.0"
+  }
 }
