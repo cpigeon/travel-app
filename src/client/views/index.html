@@ -9,19 +9,38 @@
   </head>
   <body>
     <main class="container">
-    <header class="page-header">
+    <header class="header box">
       TRAVEL PLANNER
     </header>
-    <section>
-      <div class="location-image">
-        IMAGE
+    <section class="app box">
+      <div class ="holder dest">
+        <label for="location">Where to?</label>
+        <input type="text" id="dest" placeholder="Enter destination here">
       </div>
-      <div class="location-query">
-        FORM GOES HERE
+      <div class ="holder depDate">
+        <label for="depDate">Departure Date: </label>
+        <input type="date" id="depDate" placeholder="Enter departure date here">
+      </div>
+      <div class ="holder retDate">
+        <label for="retDate">Return Date: </label>
+        <input type="date" id="retDate" placeholder="Enter return date here">
+      </div>
+      <div class="holder submit">
+        <button id="generate" type = "submit"> Let's go! </button>
+      </div>
+      <div class ="holder entry">
+        <div id = "entryHolder">
+        <div id = "picture"></div>
+        <div id = "location"></div>
+        <div id = "departure"></div>
+        <div id = "return"></div>
+        <div id = "highTemp"></div>
+        <div id = "lowTemp"></div>
+        <div id = "content"></div>
+        </div>
       </div>
     </section>
-    <footer class="page-footer">
-      FOOTER
+    <footer class="footer box">
     </footer>
     </main>
   </body>

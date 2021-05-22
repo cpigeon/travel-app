@@ -1,4 +1,6 @@
-.page-header {
+.header {
+  grid-area: hd;
+  display: flex;
+  align-items: center;
   font-size: 42px;
-  color: red;
 }

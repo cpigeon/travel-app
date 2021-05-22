@@ -1,12 +1,60 @@
 @import "./header.css";
 @import "./footer.css";
 
-.container{
+.container {
     display: grid;
-      grid-template-rows: 100px 1fr 100px;
-    /* grid-auto-rows: minmax(150px, auto); */
-    /* justify-content: center; */
+    grid-template-columns: minmax(150px, auto);
+    grid-template-rows: 100px 1fr 100px;
+    grid-template-areas:
+      "hd"
+      "main"
+      "ft";
     grid-gap: 1em;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
+}
+
+.app {
+  grid-area: main;
+  background-color: #e6e6ff;
+}
+
+.holder {
+  display: flex;
+  padding: 10px;
+}
+
+label {
+  display: block;
+  font-size: 24px;
+}
+
+input {
+  display: block;
+  border: none;
+  margin-left: 10px;
+  margin-top: 3px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+  color: black;
+  background: #e6e6ff;
+}
+
+input[type=text] {
+    color: black;
+}
+
+button {
+  width: 80px;
+  height: 40px;
+  background: #e6e6ff;
+  border: 2px solid black;
+  border-radius: 12px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+  box-shadow: 2px 2px 2px grey;
+}
+
+button:hover {
+  background-color: white;
 }
