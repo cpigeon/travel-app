@@ -18,7 +18,7 @@ const cors = require('cors');
 app.use(cors());
 
 // Initialize the main project folder
-app.use(express.static('website'));
+app.use(express.static('dist'));
 
 // Setup Server
 const server = app.listen(8081, function() {
@@ -53,6 +53,7 @@ function addData(req, res) {
 }
 
 // GET Route that returns projectData
+// reference dist/index.html??? 
 app.get('/add', function(req, res) {
   res.send(projectData);
 })
