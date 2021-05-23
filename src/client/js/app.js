@@ -68,3 +68,8 @@ const updateUI = async () => {
     console.log("error", error);
   }
 }
+
+
+export { performAction }
+export { getWeather }
+export { postData }
