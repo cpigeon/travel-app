@@ -53,7 +53,7 @@ function addData(req, res) {
 }
 
 // GET Route that returns projectData
-// reference dist/index.html??? 
+// reference dist/index.html???
 app.get('/add', function(req, res) {
   res.send(projectData);
 })
