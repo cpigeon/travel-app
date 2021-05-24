@@ -1,6 +1,6 @@
 /* Global Variables */
-const baseURL = "http://api.openweathermap.org/data/2.5/weather?zip=";
-const apiKey = ",us&appid=9aae1adc99b0c613588bbe571588031d&units=imperial";
+const baseURL = "http://api.geonames.org/search?q=";
+const apiKey = "&maxRows=10&username=cpigeon";
 
 // Create a new date instance dynamically with JS
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
