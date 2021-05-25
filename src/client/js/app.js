@@ -14,10 +14,8 @@ document.getElementById('generate').addEventListener('click', performAction);
 function performAction(event) {
   const dest = document.getElementById('dest').value;
   const depDate = document.getElementById('depDate').value;
-  console.log(depDate);
-  console.log(newDate);
-  console.log(d);
   const retDate = document.getElementById('retDate').value;
+  const countdown = getCountdown(depDate);
   getLocation(baseURL, dest, apiKey);
   // getWeather(baseURL, zip, apiKey)
   //   .then(function(data) {
@@ -43,13 +41,14 @@ const getLocation = async (baseURL, dest, apiKey) => {
   }
 }
 
-// function getCountdown(depDate) {
-//   var now = new Date();
-//   var start = new Date(now.getFullYear(), 0, 0);
-//   var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
-//   var oneDay = 1000 * 60 * 60 * 24;
-//   var day = Math.floor(diff / oneDay);
-// }
+function getCountdown(depDate) {
+  var now = new Date();
+  var nowSeconds = Date.parse(now);
+  var depDateSeconds = Date.parse(depDate);
+  var diff = Math.abs(depDateSeconds - nowSeconds);
+  var days = Math.ceil(diff / (1000 * 3600 * 24));
+  return days;
+}
 
 // Async function that uses fetch() to make a GET request to the OpenWeatherMap API
 const getWeather = async (baseURL, zip, apiKey) => {
