@@ -1,5 +1,5 @@
 /* Global Variables */
-const baseURL = "http://api.geonames.org/search?q=";
+const baseURL = "http://api.geonames.org/searchJSON?q=";
 const apiKey = "&maxRows=10&username=cpigeon";
 
 // Create a new date instance dynamically with JS
@@ -12,15 +12,44 @@ document.getElementById('generate').addEventListener('click', performAction);
 
 // Event Listener Callback Function: performAction
 function performAction(event) {
-  const zip = document.getElementById('zip').value;
-  const response = document.getElementById('feelings').value;
-  getWeather(baseURL, zip, apiKey)
-    .then(function(data) {
-      postData('/', {temp: data.main.temp, date: newDate, zip: zip, entry: response, location: data.name, highTemp: data.main.temp_max, lowTemp: data.main.temp_min});
-    })
-    .then(() => updateUI());
+  const dest = document.getElementById('dest').value;
+  const depDate = document.getElementById('depDate').value;
+  console.log(depDate);
+  console.log(newDate);
+  console.log(d);
+  const retDate = document.getElementById('retDate').value;
+  getLocation(baseURL, dest, apiKey);
+  // getWeather(baseURL, zip, apiKey)
+  //   .then(function(data) {
+  //     postData('/', {temp: data.main.temp, date: newDate, entry: response);
+  //   })
+  //   .then(() => updateUI());
 }
 
+// Async function that uses fetch() to make a GET request to the Geonames API
+const getLocation = async (baseURL, dest, apiKey) => {
+  console.log(baseURL + dest + apiKey)
+  const res = await fetch(baseURL+dest+apiKey);
+  try {
+    const data = await res.json();
+    console.log(data);
+    console.log(data.geonames[0]);
+    console.log(data.geonames[0].countryCode);
+    console.log(data.geonames[0].lat);
+    console.log(data.geonames[0].lng);
+    return data;
+  } catch(error) {
+    console.log("error", error);
+  }
+}
+
+// function getCountdown(depDate) {
+//   var now = new Date();
+//   var start = new Date(now.getFullYear(), 0, 0);
+//   var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+//   var oneDay = 1000 * 60 * 60 * 24;
+//   var day = Math.floor(diff / oneDay);
+// }
 
 // Async function that uses fetch() to make a GET request to the OpenWeatherMap API
 const getWeather = async (baseURL, zip, apiKey) => {

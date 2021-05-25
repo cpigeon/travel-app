@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+travelData = {};
 
 // Require Express to run server and routes
 const express = require('express');
@@ -54,6 +54,6 @@ function addData(req, res) {
 
 // GET Route that returns projectData
 // reference dist/index.html???
-app.get('/add', function(req, res) {
-  res.send(projectData);
+app.get('/get', function(req, res) {
+  res.send(travelData);
 })

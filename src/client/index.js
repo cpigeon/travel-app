@@ -6,7 +6,7 @@ import { postData } from './js/app'
 
 import './styles/base.scss'
 
-window.addEventListener('DOMContentLoaded', performAction);
+// window.addEventListener('DOMContentLoaded', performAction);
 
 export {
  performAction,
