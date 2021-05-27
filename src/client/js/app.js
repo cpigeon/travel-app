@@ -1,6 +1,11 @@
 /* Global Variables */
+// Geonames API
 const baseURL = "http://api.geonames.org/searchJSON?q=";
 const apiKey = "&maxRows=10&username=cpigeon";
+
+// WeatherBit API
+const baseURLWB = "http://api.weatherbit.io/v2.0/forecast/daily?";
+const apiKeyWB = "&units=I&key=db08c6000268439a9d428477e8023336";
 
 // Create a new date instance dynamically with JS
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -16,17 +21,26 @@ function performAction(event) {
   const depDate = document.getElementById('depDate').value;
   const retDate = document.getElementById('retDate').value;
   const countdown = getCountdown(depDate);
-  getLocation(baseURL, dest, apiKey);
-  // getWeather(baseURL, zip, apiKey)
-  //   .then(function(data) {
-  //     postData('/', {temp: data.main.temp, date: newDate, entry: response);
-  //   })
-  //   .then(() => updateUI());
+  console.log(depDate);
+  console.log("countdown:", countdown);
+  // if (countdown <= 7) {
+  //   baseURLWB = baseURLWBCurrent;
+  // } else {
+  //   baseURLWB = baseURLWBDaily;
+  // 
+  getLocation(baseURL, dest, apiKey)
+    .then(function(data) {
+      getWeather(baseURLWB, data.geonames[0].lat, data.geonames[0].lng, apiKeyWB)
+    })
+    // .then(function(data) {
+    //   postData('/', {temp: data.main.temp, date: newDate, entry: response);
+    // })
+    // .then(() => updateUI());
 }
 
 // Async function that uses fetch() to make a GET request to the Geonames API
 const getLocation = async (baseURL, dest, apiKey) => {
-  console.log(baseURL + dest + apiKey)
+  // console.log(baseURL + dest + apiKey)
   const res = await fetch(baseURL+dest+apiKey);
   try {
     const data = await res.json();
@@ -50,11 +64,14 @@ function getCountdown(depDate) {
   return days;
 }
 
-// Async function that uses fetch() to make a GET request to the OpenWeatherMap API
-const getWeather = async (baseURL, zip, apiKey) => {
-  const res = await fetch(baseURL+zip+apiKey);
+// Async function that uses fetch() to make a GET request to the WeatherBit API
+const getWeather = async (baseURLWB, lat, long, apiKeyWB) => {
+  console.log(baseURLWB+"&lat="+lat+"&lon="+long+apiKeyWB);
+  const res = await fetch(baseURLWB+"&lat="+lat+"&lon="+long+apiKeyWB);
   try {
     const data = await res.json();
+    console.log(data);
+    // console.log(data.data[0].app_max_temp);
     return data;
   } catch(error) {
     console.log("error", error);
