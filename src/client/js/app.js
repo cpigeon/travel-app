@@ -21,20 +21,19 @@ function performAction(event) {
   const depDate = document.getElementById('depDate').value;
   const retDate = document.getElementById('retDate').value;
   const countdown = getCountdown(depDate);
-  console.log(depDate);
-  console.log("countdown:", countdown);
-  // if (countdown <= 7) {
-  //   baseURLWB = baseURLWBCurrent;
-  // } else {
-  //   baseURLWB = baseURLWBDaily;
-  // 
   getLocation(baseURL, dest, apiKey)
     .then(function(data) {
+      console.log("First .then")
+      console.log(typeof data);
+      console.log(data);
       getWeather(baseURLWB, data.geonames[0].lat, data.geonames[0].lng, apiKeyWB)
     })
-    // .then(function(data) {
-    //   postData('/', {temp: data.main.temp, date: newDate, entry: response);
-    // })
+    .then(function(data) {
+      console.log("second .then")
+      console.log(typeof data);
+      console.log(data);
+      postData('/', {data: data.data})
+    })
     // .then(() => updateUI());
 }
 
@@ -44,11 +43,11 @@ const getLocation = async (baseURL, dest, apiKey) => {
   const res = await fetch(baseURL+dest+apiKey);
   try {
     const data = await res.json();
-    console.log(data);
-    console.log(data.geonames[0]);
-    console.log(data.geonames[0].countryCode);
-    console.log(data.geonames[0].lat);
-    console.log(data.geonames[0].lng);
+    // console.log(data);
+    // console.log(data.geonames[0]);
+    // console.log(data.geonames[0].countryCode);
+    // console.log(data.geonames[0].lat);
+    // console.log(data.geonames[0].lng);
     return data;
   } catch(error) {
     console.log("error", error);
@@ -66,12 +65,19 @@ function getCountdown(depDate) {
 
 // Async function that uses fetch() to make a GET request to the WeatherBit API
 const getWeather = async (baseURLWB, lat, long, apiKeyWB) => {
-  console.log(baseURLWB+"&lat="+lat+"&lon="+long+apiKeyWB);
+  // console.log(baseURLWB+"&lat="+lat+"&lon="+long+apiKeyWB);
   const res = await fetch(baseURLWB+"&lat="+lat+"&lon="+long+apiKeyWB);
   try {
     const data = await res.json();
-    console.log(data);
-    // console.log(data.data[0].app_max_temp);
+    console.log("Inside of getWeather function (qty 2)")
+    console.log(typeof data)
+    console.log(data)
+    console.log(typeof data.data)
+    console.log(data)
+    // console.log(data.data);
+    // console.log(data.data[0].max_temp);
+    // console.log(data.data[0].min_temp);
+    // console.log(data.data[0].weather.description);
     return data;
   } catch(error) {
     console.log("error", error);
@@ -89,9 +95,10 @@ const postData = async (url = "", data = {}) => {
     // Body data type must match "Content-Type" header
     body: JSON.stringify(data), // how we access data on the server side - data sent to a web server has to be a STRING and it is attached to the body of the request
   });
-
   try {
     const newData = await res.json();
+    console.log("inside of postData")
+    console.log(typeof newData);
     return newData;
   } catch(error) {
     console.log("error", error);

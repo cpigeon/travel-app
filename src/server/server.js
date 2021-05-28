@@ -32,22 +32,10 @@ app.post('/', addData);
 
 function addData(req, res) {
   newEntry = {
-    temp: req.body.temp,
-    date: req.body.date,
-    zip: req.body.zip,
-    entry: req.body.entry,
-    location: req.body.location,
-    highTemp: req.body.highTemp,
-    lowTemp: req.body.lowTemp
+    data: req.body.data,
   }
-
-  projectData.temp = req.body.temp;
-  projectData.date = req.body.date;
-  projectData.zip = req.body.zip;
-  projectData.entry = req.body.entry;
-  projectData.location = req.body.location;
-  projectData.highTemp = req.body.highTemp;
-  projectData.lowTemp = req.body.lowTemp;
+  
+  travelData.data = req.body.data;
 
   res.send(newEntry);
 }
