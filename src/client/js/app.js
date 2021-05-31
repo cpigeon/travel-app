@@ -26,13 +26,13 @@ function performAction(event) {
       console.log("First .then")
       console.log(typeof data);
       console.log(data);
-      getWeather(baseURLWB, data.geonames[0].lat, data.geonames[0].lng, apiKeyWB)
+      return getWeather(baseURLWB, data.geonames[0].lat, data.geonames[0].lng, apiKeyWB)
     })
     .then(function(data) {
       console.log("second .then")
       console.log(typeof data);
       console.log(data);
-      postData('/', {data: data.data})
+      return postData('/', {data: data.data})
     })
     // .then(() => updateUI());
 }
