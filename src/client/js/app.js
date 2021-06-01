@@ -86,7 +86,7 @@ const getWeather = async (baseURLWB, lat, long, apiKeyWB) => {
 
 // Async function that uses fetch() to make a POST request to add the API data to the app
 const postData = async (url = "", data = {}) => {
-  const res = await fetch(url, {
+  const res = await fetch("http://localhost:8081/", {
     method: 'POST', // access the POST route setup in server side code
     credentials: 'same-origin',
     headers: {
@@ -99,6 +99,7 @@ const postData = async (url = "", data = {}) => {
     const newData = await res.json();
     console.log("inside of postData")
     console.log(typeof newData);
+    console.log(newData)
     return newData;
   } catch(error) {
     console.log("error", error);
@@ -106,7 +107,7 @@ const postData = async (url = "", data = {}) => {
 }
 
 const updateUI = async () => {
-  const req = await fetch('/add');
+  const req = await fetch('/get');
   try {
     const allData = await req.json();
     document.getElementById('date').innerHTML = "Today's Date: " + allData.date;
