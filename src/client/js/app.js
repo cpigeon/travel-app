@@ -34,7 +34,7 @@ function performAction(event) {
       console.log(data);
       return postData('/', {data: data.data})
     })
-    // .then(() => updateUI());
+    .then(() => updateUI());
 }
 
 // Async function that uses fetch() to make a GET request to the Geonames API
@@ -110,13 +110,16 @@ const updateUI = async () => {
   const req = await fetch('/get');
   try {
     const allData = await req.json();
-    document.getElementById('date').innerHTML = "Today's Date: " + allData.date;
-    document.getElementById('location').innerHTML = "Location: " + allData.location;
-    document.getElementById('zipEntry').innerHTML = "Zip Code: " + allData.zip;
-    document.getElementById('temp').innerHTML = "Current Temperature: " + allData.temp;
-    document.getElementById('highTemp').innerHTML = "High: " + allData.highTemp;
-    document.getElementById('lowTemp').innerHTML = "Low: " + allData.lowTemp;
-    document.getElementById('content').innerHTML = "I'm feeling: " + allData.entry;
+    console.log("inside of updateUI")
+    console.log(allData.data[0].temp)
+    console.log(allData.data[0].weather.description)
+    // document.getElementById('picture').innerHTML = "Picture placeholder";
+    // document.getElementById('location').innerHTML = "Location: " + allData.location;
+    // document.getElementById('zipEntry').innerHTML = "Zip Code: " + allData.zip;
+    // document.getElementById('temp').innerHTML = "Current Temperature: " + allData.temp;
+    // document.getElementById('highTemp').innerHTML = "High: " + allData.highTemp;
+    // document.getElementById('lowTemp').innerHTML = "Low: " + allData.lowTemp;
+    // document.getElementById('content').innerHTML = "I'm feeling: " + allData.entry;
   } catch(error) {
     console.log("error", error);
   }
