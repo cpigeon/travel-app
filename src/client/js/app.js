@@ -129,7 +129,8 @@ const updateUI = async () => {
       for (var i = 0; i < 10; i++) {
         const newDiv = document.createElement('div');
         const dateDiv = document.createElement('div');
-        dateDiv.textContent = "Date: " + dateConvert(i);
+        // dateDiv.textContent = "Date: " + dateConvert(i);
+        dateDiv.textContent = "Date: " + allData.data[i].datetime;
         const highDiv = document.createElement('div');
         highDiv.textContent = "High: " + allData.data[i].high_temp;
         const lowDiv = document.createElement('div');
