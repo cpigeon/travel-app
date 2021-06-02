@@ -36,9 +36,16 @@ app.post('/', addData);
 function addData(req, res) {
   newEntry = {
     data: req.body.data,
+    destination: req.body.destination,
+    countdown: req.body.count,
+    departureDate: req.body.departureDate
   }
 
   travelData.data = req.body.data;
+  travelData.destination = req.body.destination;
+  travelData.countdown = req.body.count;
+  travelData.departureDate = req.body.departureDate;
+
   console.log(newEntry);
 
   res.send(newEntry);

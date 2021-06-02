@@ -32,7 +32,7 @@ function performAction(event) {
       console.log("second .then")
       console.log(typeof data);
       console.log(data);
-      return postData('/', {data: data.data})
+      return postData('/', {data: data.data, destination: dest, count: countdown, departureDate: depDate})
     })
     .then(() => updateUI());
 }
@@ -106,20 +106,43 @@ const postData = async (url = "", data = {}) => {
   }
 }
 
+function dateConvert(days) {
+  var result = new Date()
+  var day = parseInt(result.getDate(),10) + days;
+  var month = result.getMonth();
+  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var newDate = months[month]+' '+ day;
+  return newDate;
+}
+
 const updateUI = async () => {
   const req = await fetch('/get');
   try {
     const allData = await req.json();
-    console.log("inside of updateUI")
-    console.log(allData.data[0].temp)
-    console.log(allData.data[0].weather.description)
     // document.getElementById('picture').innerHTML = "Picture placeholder";
-    // document.getElementById('location').innerHTML = "Location: " + allData.location;
-    // document.getElementById('zipEntry').innerHTML = "Zip Code: " + allData.zip;
-    // document.getElementById('temp').innerHTML = "Current Temperature: " + allData.temp;
-    // document.getElementById('highTemp').innerHTML = "High: " + allData.highTemp;
-    // document.getElementById('lowTemp').innerHTML = "Low: " + allData.lowTemp;
-    // document.getElementById('content').innerHTML = "I'm feeling: " + allData.entry;
+    document.getElementById('location').innerHTML = "Your trip to " + allData.destination + " is " + allData.countdown + " days away!";
+    if (allData.countdown <= 7) {
+      document.getElementById('weather').innerHTML = "Current Weather: " + allData.data[0].temp + " deg F " +  allData.data[0].weather.description;
+    }
+    else {
+      document.getElementById('weather').innerHTML = "10 Day Weather Forecast";
+      for (var i = 0; i < 10; i++) {
+        const newDiv = document.createElement('div');
+        const dateDiv = document.createElement('div');
+        dateDiv.textContent = "Date: " + dateConvert(i);
+        const highDiv = document.createElement('div');
+        highDiv.textContent = "High: " + allData.data[i].high_temp;
+        const lowDiv = document.createElement('div');
+        lowDiv.textContent = "Low: " + allData.data[i].low_temp;
+        const descDiv = document.createElement('div');
+        descDiv.textContent = "Description: " + allData.data[i].weather.description;
+        newDiv.appendChild(dateDiv);
+        newDiv.appendChild(highDiv);
+        newDiv.appendChild(lowDiv);
+        newDiv.appendChild(descDiv);
+        document.getElementById('weather').appendChild(newDiv);
+      }
+    }
   } catch(error) {
     console.log("error", error);
   }
