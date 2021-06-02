@@ -4,8 +4,10 @@ const baseURL = "http://api.geonames.org/searchJSON?q=";
 const apiKey = "&maxRows=10&username=cpigeon";
 
 // WeatherBit API
-const baseURLWB = "http://api.weatherbit.io/v2.0/forecast/daily?";
+const baseURLWBForecast = "http://api.weatherbit.io/v2.0/forecast/daily?";
+const baseURLWBCurrent = "http://api.weatherbit.io/v2.0/current?";
 const apiKeyWB = "&units=I&key=db08c6000268439a9d428477e8023336";
+var baseURLWB = "";
 
 // Create a new date instance dynamically with JS
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -21,6 +23,11 @@ function performAction(event) {
   const depDate = document.getElementById('depDate').value;
   const retDate = document.getElementById('retDate').value;
   const countdown = getCountdown(depDate);
+  if (countdown <= 7) {
+    baseURLWB = baseURLWBCurrent;
+  } else {
+    baseURLWB = baseURLWBForecast;
+  }
   getLocation(baseURL, dest, apiKey)
     .then(function(data) {
       console.log("First .then")
@@ -65,16 +72,10 @@ function getCountdown(depDate) {
 
 // Async function that uses fetch() to make a GET request to the WeatherBit API
 const getWeather = async (baseURLWB, lat, long, apiKeyWB) => {
-  // console.log(baseURLWB+"&lat="+lat+"&lon="+long+apiKeyWB);
+  console.log(baseURLWB+"&lat="+lat+"&lon="+long+apiKeyWB);
   const res = await fetch(baseURLWB+"&lat="+lat+"&lon="+long+apiKeyWB);
   try {
     const data = await res.json();
-    console.log("Inside of getWeather function (qty 2)")
-    console.log(typeof data)
-    console.log(data)
-    console.log(typeof data.data)
-    console.log(data)
-    // console.log(data.data);
     // console.log(data.data[0].max_temp);
     // console.log(data.data[0].min_temp);
     // console.log(data.data[0].weather.description);
