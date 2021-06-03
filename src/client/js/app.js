@@ -9,6 +9,10 @@ const baseURLWBCurrent = "http://api.weatherbit.io/v2.0/current?";
 const apiKeyWB = "&units=I&key=db08c6000268439a9d428477e8023336";
 var baseURLWB = "";
 
+// Pixabay API
+const baseURLPix = "https://pixabay.com/api/";
+const apiKeyPix = "?key=21911457-91515483c6a5cd8fb9889335f";
+
 // Create a new date instance dynamically with JS
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let d = new Date();
@@ -41,6 +45,10 @@ function performAction(event) {
       console.log(data);
       return postData('/', {data: data.data, destination: dest, count: countdown, departureDate: depDate})
     })
+    .then(function(data) {
+      return getPicture(baseURLPix, apiKeyPix, dest)
+    })
+    // .then(() => getPicture(baseURLPix, apiKeyPix, dest))
     .then(() => updateUI());
 }
 
@@ -84,6 +92,24 @@ const getWeather = async (baseURLWB, lat, long, apiKeyWB) => {
     console.log("error", error);
   }
 }
+
+// Async function that uses fetch() to make a GET request to the Pixabay API
+const getPicture = async (baseURLPix, apiKeyPix, dest) => {
+  console.log(baseURLPix+apiKeyPix+"&q="+dest+"&image_type=photo");
+  const res = await fetch(baseURLPix+apiKeyPix+"&q="+dest+"&image_type=photo");
+  try {
+    const data = await res.json();
+    console.log(data);
+    console.log(data.hits[0].webformatURL)
+    // console.log(data.data[0].max_temp);
+    // console.log(data.data[0].min_temp);
+    // console.log(data.data[0].weather.description);
+    return data;
+  } catch(error) {
+    console.log("error", error);
+  }
+}
+
 
 // Async function that uses fetch() to make a POST request to add the API data to the app
 const postData = async (url = "", data = {}) => {
