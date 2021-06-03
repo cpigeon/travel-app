@@ -48,8 +48,11 @@ function performAction(event) {
     .then(function(data) {
       return getPicture(baseURLPix, apiKeyPix, dest)
     })
+    .then(function(data) {
+      updateUI(data.hits[0].webformatURL)
+    })
     // .then(() => getPicture(baseURLPix, apiKeyPix, dest))
-    .then(() => updateUI());
+    // .then(() => updateUI());
 }
 
 // Async function that uses fetch() to make a GET request to the Geonames API
@@ -142,11 +145,12 @@ function dateConvert(days) {
   return newDate;
 }
 
-const updateUI = async () => {
+const updateUI = async (imageURL) => {
   const req = await fetch('/get');
   try {
     const allData = await req.json();
-    // document.getElementById('picture').innerHTML = "Picture placeholder";
+    document.getElementById('picture').src = imageURL;
+    document.getElementById('picture').alt = allData.destination;
     document.getElementById('location').innerHTML = "Your trip to " + allData.destination + " is " + allData.countdown + " days away!";
     if (allData.countdown <= 7) {
       document.getElementById('weather').innerHTML = "Current Weather: " + allData.data[0].temp + " deg F " +  allData.data[0].weather.description;
