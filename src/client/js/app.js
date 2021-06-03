@@ -27,6 +27,8 @@ function performAction(event) {
   const depDate = document.getElementById('depDate').value;
   const retDate = document.getElementById('retDate').value;
   const countdown = getCountdown(depDate);
+  const tripLength = getTripLength(depDate, retDate);
+  console.log("Trip Length: " + tripLength);
   if (countdown <= 7) {
     baseURLWB = baseURLWBCurrent;
   } else {
@@ -43,7 +45,7 @@ function performAction(event) {
       console.log("second .then")
       console.log(typeof data);
       console.log(data);
-      return postData('/', {data: data.data, destination: dest, count: countdown, departureDate: depDate})
+      return postData('/', {data: data.data, destination: dest, count: countdown, departureDate: depDate, length: tripLength})
     })
     .then(function(data) {
       return getPicture(baseURLPix, apiKeyPix, dest)
@@ -79,6 +81,14 @@ function getCountdown(depDate) {
   var diff = Math.abs(depDateSeconds - nowSeconds);
   var days = Math.ceil(diff / (1000 * 3600 * 24));
   return days;
+}
+
+function getTripLength(depDate, retDate) {
+  var depDateSeconds = Date.parse(depDate);
+  var retDateSeconds = Date.parse(retDate);
+  var diff = Math.abs(depDateSeconds - retDateSeconds);
+  var tripLength = Math.ceil(diff / (1000 * 3600 * 24));
+  return tripLength;
 }
 
 // Async function that uses fetch() to make a GET request to the WeatherBit API
@@ -152,6 +162,7 @@ const updateUI = async (imageURL) => {
     document.getElementById('picture').src = imageURL;
     document.getElementById('picture').alt = allData.destination;
     document.getElementById('location').innerHTML = "Your trip to " + allData.destination + " is " + allData.countdown + " days away!";
+    document.getElementById('length').innerHTML = "Your trip is " + allData.tripLength + " days long";
     if (allData.countdown <= 7) {
       document.getElementById('weather').innerHTML = "Current Weather: " + allData.data[0].temp + " deg F " +  allData.data[0].weather.description;
     }

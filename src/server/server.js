@@ -38,13 +38,15 @@ function addData(req, res) {
     data: req.body.data,
     destination: req.body.destination,
     countdown: req.body.count,
-    departureDate: req.body.departureDate
+    departureDate: req.body.departureDate,
+    tripLength: req.body.length
   }
 
   travelData.data = req.body.data;
   travelData.destination = req.body.destination;
   travelData.countdown = req.body.count;
   travelData.departureDate = req.body.departureDate;
+  travelData.tripLength =  req.body.length;
 
   console.log(newEntry);
 
