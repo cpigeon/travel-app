@@ -99,7 +99,7 @@ const getWeather = async (baseURLWB, lat, long, apiKeyWB) => {
     const data = await res.json();
     // console.log(data.data[0].max_temp);
     // console.log(data.data[0].min_temp);
-    // console.log(data.data[0].weather.description);
+    // console.log(data.data[0].weather.icon);
     return data;
   } catch(error) {
     console.log("error", error);
@@ -164,7 +164,11 @@ const updateUI = async (imageURL) => {
     document.getElementById('location').innerHTML = "Your trip to " + allData.destination + " is " + allData.countdown + " days away!";
     document.getElementById('length').innerHTML = "Your trip is " + allData.tripLength + " days long";
     if (allData.countdown <= 7) {
-      document.getElementById('weather').innerHTML = "Current Weather: " + allData.data[0].temp + " deg F " +  allData.data[0].weather.description;
+      document.getElementById('weather').innerHTML = "Current Weather: " + allData.data[0].temp + " deg F ";
+      const iconImage = document.createElement('img');
+      iconImage.src  = "https://www.weatherbit.io/static/img/icons/" + allData.data[0].weather.icon +".png"
+      iconImage.alt = "weather icon"
+      document.getElementById('weather').appendChild(iconImage);
     }
     else {
       document.getElementById('weather').innerHTML = "10 Day Weather Forecast";
@@ -177,12 +181,15 @@ const updateUI = async (imageURL) => {
         highDiv.textContent = "High: " + allData.data[i].high_temp;
         const lowDiv = document.createElement('div');
         lowDiv.textContent = "Low: " + allData.data[i].low_temp;
-        const descDiv = document.createElement('div');
-        descDiv.textContent = "Description: " + allData.data[i].weather.description;
+        // const descDiv = document.createElement('div');
+        // descDiv.textContent = "Description: " + allData.data[i].weather.description;
+        const iconImage = document.createElement('img');
+        iconImage.src  = "https://www.weatherbit.io/static/img/icons/" + allData.data[0].weather.icon +".png"
+        iconImage.alt = "weather icon"
         newDiv.appendChild(dateDiv);
         newDiv.appendChild(highDiv);
+        newDiv.appendChild(iconImage);
         newDiv.appendChild(lowDiv);
-        newDiv.appendChild(descDiv);
         document.getElementById('weather').appendChild(newDiv);
       }
     }
