@@ -45,20 +45,20 @@ function performAction(event) {
 
 // Function that generates the trip countdown
 function getCountdown(depDate) {
-  var now = new Date();
-  var nowSeconds = Date.parse(now);
-  var depDateSeconds = Date.parse(depDate);
-  var diff = Math.abs(depDateSeconds - nowSeconds);
-  var days = Math.ceil(diff / (1000 * 3600 * 24));
+  const now = new Date();
+  const nowSeconds = Date.parse(now);
+  const depDateSeconds = Date.parse(depDate);
+  const diff = Math.abs(depDateSeconds - nowSeconds);
+  const days = Math.ceil(diff / (1000 * 3600 * 24));
   return days;
 }
 
 // Function that generates the trip length
 function getTripLength(depDate, retDate) {
-  var depDateSeconds = Date.parse(depDate);
-  var retDateSeconds = Date.parse(retDate);
-  var diff = Math.abs(depDateSeconds - retDateSeconds);
-  var tripLength = Math.ceil(diff / (1000 * 3600 * 24));
+  const depDateSeconds = Date.parse(depDate);
+  const retDateSeconds = Date.parse(retDate);
+  const diff = Math.abs(depDateSeconds - retDateSeconds);
+  const tripLength = Math.ceil(diff / (1000 * 3600 * 24));
   return tripLength;
 }
 
@@ -116,7 +116,7 @@ const postData = async (url = "", data = {}) => {
 }
 
 const updateUI = async (imageURL) => {
-  const req = await fetch('/get');
+  const req = await fetch('http://localhost:8081/get');
   try {
     const allData = await req.json();
     document.getElementById('picture').src = imageURL;
