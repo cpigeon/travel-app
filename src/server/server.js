@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-travelData = {};
+const travelData = {};
 
 // Require Express to run server and routes
 const express = require('express');
@@ -52,5 +52,3 @@ function addData(req, res) {
 app.get('/get', function(req, res) {
   res.send(travelData);
 })
-
-export { addData }
