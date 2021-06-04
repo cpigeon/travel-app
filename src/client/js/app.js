@@ -134,15 +134,16 @@ const updateUI = async (imageURL) => {
     }
     else {
       // if trip is > 7 days away, display 10 day weather forecast (using a for loop)
-      document.getElementById('weather').innerHTML = "10 Day Weather Forecast";
+      document.getElementById('forecast').innerHTML = "10 Day Weather Forecast";
       for (var i = 0; i < 10; i++) {
         const newDiv = document.createElement('div');
+        newDiv.id = "day"
         const dateDiv = document.createElement('div');
-        dateDiv.textContent = "Date: " + allData.data[i].datetime;
+        dateDiv.textContent = allData.data[i].datetime;
         const highDiv = document.createElement('div');
-        highDiv.textContent = "High: " + allData.data[i].high_temp;
+        highDiv.textContent = allData.data[i].high_temp;
         const lowDiv = document.createElement('div');
-        lowDiv.textContent = "Low: " + allData.data[i].low_temp;
+        lowDiv.textContent = allData.data[i].low_temp;
         const iconImage = document.createElement('img');
         iconImage.id = "icon";
         iconImage.src  = "https://www.weatherbit.io/static/img/icons/" + allData.data[0].weather.icon +".png"
