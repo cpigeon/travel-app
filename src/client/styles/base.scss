@@ -60,11 +60,16 @@ button:hover {
 }
 
 .entry {
-
+  font-size: 16px;
 }
 
 #picture {
   // height: 300px;
   max-width: 75%;
   height: auto;
+}
+
+#icon {
+  width: 40px;
+  height: 40px;
 }

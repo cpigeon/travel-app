@@ -127,6 +127,7 @@ const updateUI = async (imageURL) => {
       // if trip is <= 7 days away, display current weather forecast
       document.getElementById('weather').innerHTML = "Current Weather: " + allData.data[0].temp + " deg F ";
       const iconImage = document.createElement('img');
+      iconImage.id = "icon";
       iconImage.src  = "https://www.weatherbit.io/static/img/icons/" + allData.data[0].weather.icon +".png"
       iconImage.alt = "weather icon"
       document.getElementById('weather').appendChild(iconImage);
@@ -143,6 +144,7 @@ const updateUI = async (imageURL) => {
         const lowDiv = document.createElement('div');
         lowDiv.textContent = "Low: " + allData.data[i].low_temp;
         const iconImage = document.createElement('img');
+        iconImage.id = "icon";
         iconImage.src  = "https://www.weatherbit.io/static/img/icons/" + allData.data[0].weather.icon +".png"
         iconImage.alt = "weather icon"
         newDiv.appendChild(dateDiv);
