@@ -52,3 +52,5 @@ function addData(req, res) {
 app.get('/get', function(req, res) {
   res.send(travelData);
 })
+
+export { addData }
