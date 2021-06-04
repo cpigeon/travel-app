@@ -48,13 +48,10 @@ function addData(req, res) {
   travelData.departureDate = req.body.departureDate;
   travelData.tripLength =  req.body.length;
 
-  console.log(newEntry);
-
   res.send(newEntry);
 }
 
 // GET Route that returns projectData
-// reference dist/index.html???
 app.get('/get', function(req, res) {
   res.send(travelData);
 })

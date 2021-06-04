@@ -13,11 +13,6 @@ var baseURLWB = "";
 const baseURLPix = "https://pixabay.com/api/";
 const apiKeyPix = "?key=21911457-91515483c6a5cd8fb9889335f";
 
-// Create a new date instance dynamically with JS
-var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-let d = new Date();
-let newDate = months[d.getMonth()]+' '+ d.getDate()+', '+ d.getFullYear();
-
 // Event Listener - Click on Element with ID 'generate'
 document.getElementById('generate').addEventListener('click', performAction);
 
@@ -28,7 +23,6 @@ function performAction(event) {
   const retDate = document.getElementById('retDate').value;
   const countdown = getCountdown(depDate);
   const tripLength = getTripLength(depDate, retDate);
-  console.log("Trip Length: " + tripLength);
   if (countdown <= 7) {
     baseURLWB = baseURLWBCurrent;
   } else {
@@ -36,15 +30,9 @@ function performAction(event) {
   }
   getLocation(baseURL, dest, apiKey)
     .then(function(data) {
-      console.log("First .then")
-      console.log(typeof data);
-      console.log(data);
       return getWeather(baseURLWB, data.geonames[0].lat, data.geonames[0].lng, apiKeyWB)
     })
     .then(function(data) {
-      console.log("second .then")
-      console.log(typeof data);
-      console.log(data);
       return postData('/', {data: data.data, destination: dest, count: countdown, departureDate: depDate, length: tripLength})
     })
     .then(function(data) {
@@ -53,27 +41,9 @@ function performAction(event) {
     .then(function(data) {
       updateUI(data.hits[0].webformatURL)
     })
-    // .then(() => getPicture(baseURLPix, apiKeyPix, dest))
-    // .then(() => updateUI());
 }
 
-// Async function that uses fetch() to make a GET request to the Geonames API
-const getLocation = async (baseURL, dest, apiKey) => {
-  // console.log(baseURL + dest + apiKey)
-  const res = await fetch(baseURL+dest+apiKey);
-  try {
-    const data = await res.json();
-    // console.log(data);
-    // console.log(data.geonames[0]);
-    // console.log(data.geonames[0].countryCode);
-    // console.log(data.geonames[0].lat);
-    // console.log(data.geonames[0].lng);
-    return data;
-  } catch(error) {
-    console.log("error", error);
-  }
-}
-
+// Function that generates the trip countdown
 function getCountdown(depDate) {
   var now = new Date();
   var nowSeconds = Date.parse(now);
@@ -83,6 +53,7 @@ function getCountdown(depDate) {
   return days;
 }
 
+// Function that generates the trip length
 function getTripLength(depDate, retDate) {
   var depDateSeconds = Date.parse(depDate);
   var retDateSeconds = Date.parse(retDate);
@@ -91,15 +62,22 @@ function getTripLength(depDate, retDate) {
   return tripLength;
 }
 
+// Async function that uses fetch() to make a GET request to the Geonames API
+const getLocation = async (baseURL, dest, apiKey) => {
+  const res = await fetch(baseURL+dest+apiKey);
+  try {
+    const data = await res.json();
+    return data;
+  } catch(error) {
+    console.log("error", error);
+  }
+}
+
 // Async function that uses fetch() to make a GET request to the WeatherBit API
 const getWeather = async (baseURLWB, lat, long, apiKeyWB) => {
-  console.log(baseURLWB+"&lat="+lat+"&lon="+long+apiKeyWB);
   const res = await fetch(baseURLWB+"&lat="+lat+"&lon="+long+apiKeyWB);
   try {
     const data = await res.json();
-    // console.log(data.data[0].max_temp);
-    // console.log(data.data[0].min_temp);
-    // console.log(data.data[0].weather.icon);
     return data;
   } catch(error) {
     console.log("error", error);
@@ -108,15 +86,9 @@ const getWeather = async (baseURLWB, lat, long, apiKeyWB) => {
 
 // Async function that uses fetch() to make a GET request to the Pixabay API
 const getPicture = async (baseURLPix, apiKeyPix, dest) => {
-  console.log(baseURLPix+apiKeyPix+"&q="+dest+"&image_type=photo");
   const res = await fetch(baseURLPix+apiKeyPix+"&q="+dest+"&image_type=photo");
   try {
     const data = await res.json();
-    console.log(data);
-    console.log(data.hits[0].webformatURL)
-    // console.log(data.data[0].max_temp);
-    // console.log(data.data[0].min_temp);
-    // console.log(data.data[0].weather.description);
     return data;
   } catch(error) {
     console.log("error", error);
@@ -137,22 +109,10 @@ const postData = async (url = "", data = {}) => {
   });
   try {
     const newData = await res.json();
-    console.log("inside of postData")
-    console.log(typeof newData);
-    console.log(newData)
     return newData;
   } catch(error) {
     console.log("error", error);
   }
-}
-
-function dateConvert(days) {
-  var result = new Date()
-  var day = parseInt(result.getDate(),10) + days;
-  var month = result.getMonth();
-  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  var newDate = months[month]+' '+ day;
-  return newDate;
 }
 
 const updateUI = async (imageURL) => {
@@ -164,6 +124,7 @@ const updateUI = async (imageURL) => {
     document.getElementById('location').innerHTML = "Your trip to " + allData.destination + " is " + allData.countdown + " days away!";
     document.getElementById('length').innerHTML = "Your trip is " + allData.tripLength + " days long";
     if (allData.countdown <= 7) {
+      // if trip is <= 7 days away, display current weather forecast
       document.getElementById('weather').innerHTML = "Current Weather: " + allData.data[0].temp + " deg F ";
       const iconImage = document.createElement('img');
       iconImage.src  = "https://www.weatherbit.io/static/img/icons/" + allData.data[0].weather.icon +".png"
@@ -171,18 +132,16 @@ const updateUI = async (imageURL) => {
       document.getElementById('weather').appendChild(iconImage);
     }
     else {
+      // if trip is > 7 days away, display 10 day weather forecast (using a for loop)
       document.getElementById('weather').innerHTML = "10 Day Weather Forecast";
       for (var i = 0; i < 10; i++) {
         const newDiv = document.createElement('div');
         const dateDiv = document.createElement('div');
-        // dateDiv.textContent = "Date: " + dateConvert(i);
         dateDiv.textContent = "Date: " + allData.data[i].datetime;
         const highDiv = document.createElement('div');
         highDiv.textContent = "High: " + allData.data[i].high_temp;
         const lowDiv = document.createElement('div');
         lowDiv.textContent = "Low: " + allData.data[i].low_temp;
-        // const descDiv = document.createElement('div');
-        // descDiv.textContent = "Description: " + allData.data[i].weather.description;
         const iconImage = document.createElement('img');
         iconImage.src  = "https://www.weatherbit.io/static/img/icons/" + allData.data[0].weather.icon +".png"
         iconImage.alt = "weather icon"
