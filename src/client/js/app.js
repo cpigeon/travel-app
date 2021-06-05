@@ -116,7 +116,7 @@ const postData = async (url = "", data = {}) => {
 }
 
 const updateUI = async (imageURL) => {
-  const req = await fetch('http://localhost:8081/get');
+  const req = await fetch('http://localhost:8081/data');
   try {
     const allData = await req.json();
     document.getElementById('picture').src = imageURL;
