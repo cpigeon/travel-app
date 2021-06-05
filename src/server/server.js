@@ -17,6 +17,9 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors());
 
+// Require node-fetch
+const fetch = require('node-fetch')
+
 // Initialize the main project folder
 app.use(express.static('dist'));
 
@@ -52,3 +55,5 @@ function addData(req, res) {
 app.get('/get', function(req, res) {
   res.send(travelData);
 })
+
+module.exports = app
