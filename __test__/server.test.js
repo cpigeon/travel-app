@@ -4,10 +4,9 @@ const supertest = require('supertest');
 // const {response} = require('express');
 const request = supertest(app)
 
-it('testing /data endpoint', async (done) => {
+it('testing /data endpoint', async () => {
   const response = await request.get('/data')
-  return response;
+  // return response;
   expect(response.status).toBe(200)
   expect(response.body).toBeDefined();
-  done()
 })
